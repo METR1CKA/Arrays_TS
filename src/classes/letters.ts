@@ -1,4 +1,4 @@
-export type Dic = {index: number, letter: string}
+export type Dic = { index: number, letter: string }
 
 export default class Letters {
 
@@ -15,8 +15,6 @@ export default class Letters {
   private copyLetters: string[] = []
 
   private ordenator(): void {
-    //this.letters.sort()
-    
     this.copyLetters = this.letters
     
     this.letters = []
@@ -61,7 +59,7 @@ export default class Letters {
       if (this.letters[i] === letter) {isFound = true; index = i}
     }
 
-    return isFound ? {index, letter} : null
+    return isFound ? { index, letter } : null
   }
 
   public addLetter(letter: string): string {
@@ -73,7 +71,7 @@ export default class Letters {
   public updateLetter(letter: string, newLetter: string): boolean {
     const isFound = this.getOneLetter(letter)
 
-    if (!isFound) {return false}
+    if (!isFound) { return false }
 
     this.letters[isFound.index] = newLetter
 
@@ -92,7 +90,7 @@ export default class Letters {
     this.copyLetters[isFound.index] = this.copyLetters[-1]
 
     for (let element of this.copyLetters) {
-      if (element !== undefined) { this.letters[this.letters.length++] = element }
+      if (element !== undefined) { this.addLetter(element) }
     }
 
     this.copyLetters = []
