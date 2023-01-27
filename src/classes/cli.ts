@@ -22,58 +22,50 @@ export default class CLI extends Letters {
     console.log('')
 
     if (this.isEmpty()) {
-      await this.is_empty()
+      const options = await inquirer.prompt({
+        name: 'answer',
+        message: 'Choose Option:',
+        type: 'list',
+        choices: [commands.SRT, commands.ADD, commands.CDT, commands.EXT]
+      })
+
+      switch (options.answer) {
+        case commands.SRT: this.init('start'); break;
+
+        case commands.ADD: await this.add(); break;
+
+        case commands.CDT: this.init('credits'); break;
+
+        case commands.EXT: this.init('end'); return;
+      }
     } else {
-      await this.no_empty()
+      const options = await inquirer.prompt({
+        name: 'answer',
+        message: 'Choose Option:',
+        type: 'list',
+        choices: Object.values(commands)
+      })
+
+      switch (options.answer) {
+        case commands.SRT: this.init('start'); break;
+
+        case commands.ALL: this.all(); break;
+
+        case commands.ONE: await this.one(); break;
+
+        case commands.ADD: await this.add(); break;
+
+        case commands.UPD: await this.upd(); break;
+
+        case commands.DEL: await this.del(); break;
+
+        case commands.CDT: this.init('credits'); break;
+
+        case commands.EXT: this.init('end'); return;
+      }
     }
 
     await this.main()
-  }
-
-  private async is_empty() {
-    const options = await inquirer.prompt({
-      name: 'answer',
-      message: 'Choose Option:',
-      type: 'list',
-      choices: [commands.SRT, commands.ADD, commands.CDT, commands.EXT]
-    })
-
-    switch (options.answer) {
-      case commands.SRT: this.init('start'); break;
-
-      case commands.ADD: await this.add(); break;
-
-      case commands.CDT: this.init('credits'); break;
-
-      case commands.EXT: this.init('end'); return;
-    }
-  }
-
-  private async no_empty() {
-    const options = await inquirer.prompt({
-      name: 'answer',
-      message: 'Choose Option:',
-      type: 'list',
-      choices: Object.values(commands)
-    })
-
-    switch (options.answer) {
-      case commands.SRT: this.init('start'); break;
-
-      case commands.ALL: this.all(); break;
-
-      case commands.ONE: await this.one(); break;
-
-      case commands.ADD: await this.add(); break;
-
-      case commands.UPD: await this.upd(); break;
-
-      case commands.DEL: await this.del(); break;
-
-      case commands.CDT: this.init('credits'); break;
-
-      case commands.EXT: this.init('end'); return;
-    }
   }
 
   private init(option: string) {
