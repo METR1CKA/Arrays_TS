@@ -159,9 +159,13 @@ export default class CLI extends Letters {
 
       const data = this.updateLetter(option1.answer, option2.answer)
 
-      data
-        ? console.log(`\nLetter ${option1.answer} updated to letter ${option2.answer}!!\n\nLetters:`, this.getAllLetters())
-        : console.log(`\nLetter ${option1.answer} not found...`)
+      if (!data) {
+        console.log(`\nLetter ${option1.answer} updated to letter ${option2.answer}!!`)
+
+        return
+      }
+
+      console.log(`\nLetter ${option1.answer} not found...`)
 
     } else {
 
@@ -197,12 +201,12 @@ export default class CLI extends Letters {
       }
 
       if (this.isEmpty()) {
-        console.log(`\nLetter ${letter} deleted!!\n\nLetters:`, this.getAllLetters(), '\n\nThe array of letters is empty...')
+        console.log(`\nLetter ${letter} deleted!!\n\nThe array of letters is empty...`)
 
         return
       }
 
-      console.log(`\nLetter ${letter} deleted!!\n\nLetters:`, this.getAllLetters())
+      console.log(`\nLetter ${letter} deleted!!`)
 
       return
     }

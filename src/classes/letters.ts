@@ -1,4 +1,4 @@
-export type Dic = { index: number, letter: string }
+export type Dic = {index: number, letter: string}
 
 export default class Letters {
 
@@ -6,12 +6,34 @@ export default class Letters {
     return this
   }
 
+  private lettersMay: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+  private lettersMin: string[] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
   private letters: string[] = []
 
   private copyLetters: string[] = []
 
   private ordenator(): void {
-    this.letters.sort()
+    //this.letters.sort()
+    
+    this.copyLetters = this.letters
+    
+    this.letters = []
+
+    for (let may of this.lettersMay) {
+      for (let letter of this.copyLetters) {
+        if (may === letter) { this.addLetter(letter) }
+      }
+    }
+
+    for (let min of this.lettersMin) {
+      for (let letter of this.copyLetters) {
+        if (min === letter) { this.addLetter(letter) }
+      }
+    }
+
+    this.copyLetters = []
   }
 
   public clean(): void {
@@ -36,16 +58,14 @@ export default class Letters {
     let index: number = 0
 
     for (let i = 0; i < this.letters.length; i++) {
-      if (this.letters[i] === letter) { isFound = true; index = i }
+      if (this.letters[i] === letter) {isFound = true; index = i}
     }
 
-    return isFound ? { index, letter } : null
+    return isFound ? {index, letter} : null
   }
 
   public addLetter(letter: string): string {
     this.letters[this.letters.length++] = letter
-
-    this.ordenator()
 
     return `\nLetter ${letter} added`
   }
@@ -53,7 +73,7 @@ export default class Letters {
   public updateLetter(letter: string, newLetter: string): boolean {
     const isFound = this.getOneLetter(letter)
 
-    if (!isFound) { return false }
+    if (!isFound) {return false}
 
     this.letters[isFound.index] = newLetter
 
@@ -65,19 +85,17 @@ export default class Letters {
 
     if (!isFound) { return false }
 
-    this.letters[isFound.index] = this.letters[-1]
-
     this.copyLetters = this.letters
 
-    this.letters.length = 0
+    this.letters = []
 
-    for (const element of this.copyLetters) {
-      if (element !== undefined) { this.addLetter(element) }
+    this.copyLetters[isFound.index] = this.copyLetters[-1]
+
+    for (let element of this.copyLetters) {
+      if (element !== undefined) { this.letters[this.letters.length++] = element }
     }
 
-    this.copyLetters.length = 0
-
-    this.ordenator()
+    this.copyLetters = []
 
     return true
   }
