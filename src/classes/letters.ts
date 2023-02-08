@@ -16,7 +16,7 @@ export default class Letters {
 
   private ordenator(): void {
     this.copyLetters = this.letters
-    
+
     this.letters = []
 
     for (let may of this.lettersMay) {
@@ -56,7 +56,7 @@ export default class Letters {
     let index: number = 0
 
     for (let i = 0; i < this.letters.length; i++) {
-      if (this.letters[i] === letter) {isFound = true; index = i}
+      if (this.letters[i] === letter) { isFound = true; index = i }
     }
 
     return isFound ? { index, letter } : null
